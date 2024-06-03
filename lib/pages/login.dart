@@ -59,21 +59,21 @@ class LogIn extends StatelessWidget {
                     top: height * 0.1,
                     child: Align(
                       alignment: Alignment.center,
-                      child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          backgroundColor: Colors.pink.shade400,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: constraints.maxWidth * 0.4,
-                            vertical: constraints.maxHeight * 0.015,
+                      child: SizedBox(
+                        width: constraints.maxWidth * 0.9,
+                        height: constraints.maxHeight * 0.065,
+                        child: TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.pink.shade400,
                           ),
-                        ),
-                        child: Text(
-                          "Log In",
-                          style: TextStyle(
-                            color: Colors.grey.shade100,
-                            fontSize: width * 0.05,
-                            fontWeight: FontWeight.bold,
+                          child: Text(
+                            "Log In",
+                            style: TextStyle(
+                              color: Colors.grey.shade100,
+                              fontSize: width * 0.05,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
