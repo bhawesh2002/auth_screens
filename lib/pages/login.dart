@@ -28,7 +28,7 @@ class LogIn extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: Text(
-                        "Login",
+                        "Log In",
                         style: TextStyle(
                           color: Colors.grey.shade900,
                           fontSize: width * 0.08,
