@@ -84,7 +84,7 @@ class LogIn extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Text(
-                        "Or Sign In With",
+                        "Or Log In With",
                         style: TextStyle(
                           color: Colors.grey.shade700,
                           fontSize: width * 0.04,
