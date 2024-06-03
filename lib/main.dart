@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:auth_screens/pages/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,14 +21,7 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: GoogleFonts.lato().fontFamily,
       ),
-      home: const Scaffold(
-        body: Center(
-          child: Text(
-            'Hello World!',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ),
+      home: const HomePage(),
     );
   }
 }
