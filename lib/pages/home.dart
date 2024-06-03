@@ -20,8 +20,12 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox.square(
-              dimension: 24,
+            Divider(
+              height: 50,
+              indent: 50,
+              endIndent: 50,
+              thickness: 2,
+              color: Colors.grey.shade300,
             ),
             TextButton(
               onPressed: () {
