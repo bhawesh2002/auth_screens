@@ -1,10 +1,13 @@
+import 'package:auth_screens/controllers/signup_controller.dart';
 import 'package:auth_screens/pages/welcome.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignUp extends StatelessWidget {
-  const SignUp({super.key});
+  SignUp({super.key});
 
+  final SignupController _signupController = Get.put(SignupController());
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -81,26 +84,31 @@ class SignUp extends StatelessWidget {
                     top: height * 0.185,
                     child: Align(
                       alignment: Alignment.center,
-                      child: SizedBox(
-                        width: constraints.maxWidth * 0.9,
-                        height: constraints.maxHeight * 0.065,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const WelcomePage(),
+                      child: Obx(
+                        () => SizedBox(
+                          width: constraints.maxWidth * 0.9,
+                          height: constraints.maxHeight * 0.065,
+                          child: TextButton(
+                            onPressed: () {
+                              _signupController.signup();
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const WelcomePage(),
+                              //   ),
+                              // );
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.pink.shade400,
+                            ),
+                            child: Text(
+                              _signupController.signUpStatus.value == true
+                                  ? "Signing In"
+                                  : "Sign Up",
+                              style: TextStyle(
+                                color: Colors.grey.shade100,
+                                fontSize: width * 0.05,
+                                fontWeight: FontWeight.bold,
                               ),
-                            );
-                          },
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.pink.shade400,
-                          ),
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              color: Colors.grey.shade100,
-                              fontSize: width * 0.05,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
