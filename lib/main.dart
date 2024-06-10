@@ -19,6 +19,9 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.pinkAccent.shade400,
+        ),
         fontFamily: GoogleFonts.lato().fontFamily,
       ),
       home: const HomePage(),
