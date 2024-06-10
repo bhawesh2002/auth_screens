@@ -91,11 +91,14 @@ class SignUp extends StatelessWidget {
                           child: TextButton(
                             onPressed: () {
                               _signupController.signup();
-                              // Navigator.of(context).push(
-                              //   MaterialPageRoute(
-                              //     builder: (context) => const WelcomePage(),
-                              //   ),
-                              // );
+                              _signupController.signUpStatus.value == true
+                                  ? Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const WelcomePage(),
+                                      ),
+                                    )
+                                  : null;
                             },
                             style: TextButton.styleFrom(
                               backgroundColor: Colors.pink.shade400,
