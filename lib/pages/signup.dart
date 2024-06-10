@@ -1,3 +1,4 @@
+import 'package:auth_screens/pages/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -84,7 +85,13 @@ class SignUp extends StatelessWidget {
                         width: constraints.maxWidth * 0.9,
                         height: constraints.maxHeight * 0.065,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const WelcomePage(),
+                              ),
+                            );
+                          },
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.pink.shade400,
                           ),
