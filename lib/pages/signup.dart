@@ -1,5 +1,5 @@
 import 'package:auth_screens/controllers/signup_controller.dart';
-import 'package:auth_screens/pages/welcome.dart';
+import 'package:auth_screens/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -92,12 +92,7 @@ class SignUp extends StatelessWidget {
                             onPressed: () {
                               _signupController.signup();
                               _signupController.signUpStatus.value == true
-                                  ? Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const WelcomePage(),
-                                      ),
-                                    )
+                                  ? Get.toNamed(AppRoutes.welcome)
                                   : null;
                             },
                             style: TextButton.styleFrom(

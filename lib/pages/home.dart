@@ -1,6 +1,6 @@
-import 'package:auth_screens/pages/login.dart';
-import 'package:auth_screens/pages/signup.dart';
+import 'package:auth_screens/routes/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -29,11 +29,7 @@ class HomePage extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => SignUp(),
-                  ),
-                );
+                Get.toNamed(AppRoutes.signup);
               },
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
@@ -51,11 +47,7 @@ class HomePage extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LogIn(),
-                  ),
-                );
+                Get.toNamed(AppRoutes.login);
               },
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.symmetric(

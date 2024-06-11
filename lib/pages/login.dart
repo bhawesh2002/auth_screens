@@ -1,5 +1,6 @@
-import 'package:auth_screens/pages/welcome.dart';
+import 'package:auth_screens/routes/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LogIn extends StatelessWidget {
@@ -65,11 +66,7 @@ class LogIn extends StatelessWidget {
                         height: constraints.maxHeight * 0.065,
                         child: TextButton(
                           onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const WelcomePage(),
-                              ),
-                            );
+                            Get.toNamed(AppRoutes.welcome);
                           },
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.pink.shade400,
