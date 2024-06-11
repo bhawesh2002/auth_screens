@@ -10,6 +10,6 @@ class AppPages {
     GetPage(name: AppRoutes.home, page: () => const HomePage()),
     GetPage(name: AppRoutes.login, page: () => const LogIn()),
     GetPage(name: AppRoutes.signup, page: () => SignUp()),
-    GetPage(name: AppRoutes.welcome, page: () => const WelcomePage())
+    GetPage(name: AppRoutes.welcome, page: () => WelcomePage())
   ];
 }
