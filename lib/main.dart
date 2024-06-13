@@ -1,10 +1,10 @@
+import 'package:auth_screens/pages/splash_screen.dart';
 import 'package:auth_screens/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:auth_screens/pages/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +27,7 @@ class MainApp extends StatelessWidget {
         fontFamily: GoogleFonts.lato().fontFamily,
       ),
       getPages: AppPages.pages,
-      home: const HomePage(),
+      home: SplashScreen(),
     );
   }
 }
