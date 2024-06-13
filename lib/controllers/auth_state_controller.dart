@@ -75,4 +75,21 @@ class AuthStateController extends GetxController {
       debugPrint("emailPassLogin Error:$e");
     }
   }
+
+  Future<void> logoutDeleteAcc() async {
+    try {
+      if (currentUser != null) {
+        debugPrint("logoutDeleteAcc() Logging Out ${currentUser?.email}");
+        await FirebaseAuth.instance.signOut();
+        debugPrint("logoutDeleteAcc() Deleting Acc ${currentUser?.email}");
+        await currentUser?.delete();
+      } else {
+        debugPrint("logoutDeleteAcc(): user is null");
+      }
+    } on FirebaseAuthException catch (e) {
+      debugPrint("logoutDeleteAcc() error: $e");
+    } catch (e) {
+      debugPrint("logoutDeleteAcc() error: $e");
+    }
+  }
 }
