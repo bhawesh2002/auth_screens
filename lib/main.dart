@@ -1,5 +1,3 @@
-import 'package:auth_screens/pages/splash_screen.dart';
-import 'package:auth_screens/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,8 +24,11 @@ class MainApp extends StatelessWidget {
         ),
         fontFamily: GoogleFonts.lato().fontFamily,
       ),
-      getPages: AppPages.pages,
-      home: SplashScreen(),
+      home: const Scaffold(
+        body: Center(
+          child: Text("Home Page"),
+        ),
+      ),
     );
   }
 }
