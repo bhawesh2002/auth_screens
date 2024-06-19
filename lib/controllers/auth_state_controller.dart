@@ -46,9 +46,10 @@ class AuthStateController extends GetxController {
   Future<void> loginWithEmailandPass(
       {required String email, required String password}) async {
     try {
-      await _authInstance.signInWithEmailAndPassword(
+      UserCredential _userCred = await _authInstance.signInWithEmailAndPassword(
           email: email, password: password);
-      _authState();
+      //update _user with the currently logged in user
+      _user.value = _userCred.user;
     } on FirebaseAuthException catch (e) {
       debugPrint("loginWithEmailandPass(FirebaseAuthException):$e");
     } catch (e) {
