@@ -1,3 +1,5 @@
+import 'package:auth_screens/controllers/auth_state_controller.dart';
+import 'package:auth_screens/pages/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +11,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // ignore: unused_local_variable
+  AuthStateController _authStateController = Get.put(AuthStateController());
   runApp(const MainApp());
 }
 
@@ -19,16 +23,10 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.pinkAccent.shade400,
-        ),
+        scaffoldBackgroundColor: Colors.grey.shade100,
         fontFamily: GoogleFonts.lato().fontFamily,
       ),
-      home: const Scaffold(
-        body: Center(
-          child: Text("Home Page"),
-        ),
-      ),
+      home: const SignupPage(),
     );
   }
 }
