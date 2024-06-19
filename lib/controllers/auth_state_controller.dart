@@ -50,4 +50,12 @@ class AuthStateController extends GetxController {
     await _authInstance.signOut();
     _user.value == null;
   }
+
+  Future<void> deleteAc() async {
+    if (_user.value != null) {
+      await _user.value?.delete();
+    } else {
+      debugPrint("User not logged in");
+    }
+  }
 }
