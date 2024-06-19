@@ -6,6 +6,9 @@ class AuthStateController extends GetxController {
   final _authInstance = FirebaseAuth.instance;
   final Rx<User?> _user = Rx<User?>(null);
 
+  //getter to get user
+  User? get user => _user.value;
+
   //override onReady method
   //to check if user is logged in or not
   //when the controller is ready
