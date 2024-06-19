@@ -62,7 +62,7 @@ class AuthStateController extends GetxController {
     await deleteAc();
     debugPrint("Signing Out ${_user.value?.email}");
     await _authInstance.signOut();
-    _user.value == null;
+    _user.value = null;
   }
 
   //deleteAc method to delete user account
