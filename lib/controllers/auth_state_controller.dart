@@ -6,12 +6,16 @@ class AuthStateController extends GetxController {
   final _authInstance = FirebaseAuth.instance;
   final Rx<User?> _user = Rx<User?>(null);
 
+  //override onReady method
+  //to check if user is logged in or not
+  //when the controller is ready
   @override
   void onReady() {
     super.onReady();
     _authState();
   }
 
+  //_authState method to check if user is logged in or not
   void _authState() {
     _user.value = _authInstance.currentUser;
     if (_user.value == null) {
@@ -21,6 +25,7 @@ class AuthStateController extends GetxController {
     }
   }
 
+  //signUpWithEmailandPass method to sign up user with email and password
   Future<void> signUpWithEmailandPass(
       {required String email, required String password}) async {
     try {
@@ -33,6 +38,7 @@ class AuthStateController extends GetxController {
     }
   }
 
+  //loginWithEmailandPass method to login user with email and password
   Future<void> loginWithEmailandPass(
       {required String email, required String password}) async {
     try {
@@ -46,11 +52,13 @@ class AuthStateController extends GetxController {
     }
   }
 
+  //signOut method to sign out user
   Future<void> signOut() async {
     await _authInstance.signOut();
     _user.value == null;
   }
 
+  //deleteAc method to delete user account
   Future<void> deleteAc() async {
     if (_user.value != null) {
       await _user.value?.delete();
