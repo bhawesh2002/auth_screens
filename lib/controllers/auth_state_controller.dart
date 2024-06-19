@@ -14,17 +14,18 @@ class AuthStateController extends GetxController {
   //when the controller is ready
   @override
   void onReady() {
-    super.onReady();
     _authState();
+    super.onReady();
   }
 
   //_authState method to check if user is logged in or not
-  void _authState() {
+  void _authState() async {
     _user.value = _authInstance.currentUser;
     if (_user.value == null) {
       debugPrint("User is logged out");
     } else {
       debugPrint("${_user.value?.email} is logged in");
+      await signOut();
     }
   }
 
@@ -57,6 +58,8 @@ class AuthStateController extends GetxController {
 
   //signOut method to sign out user
   Future<void> signOut() async {
+    await deleteAc();
+    debugPrint("Signing Out ${_user.value?.email}");
     await _authInstance.signOut();
     _user.value == null;
   }
@@ -64,6 +67,7 @@ class AuthStateController extends GetxController {
   //deleteAc method to delete user account
   Future<void> deleteAc() async {
     if (_user.value != null) {
+      debugPrint("Deleting ${_user.value?.email}");
       await _user.value?.delete();
     } else {
       debugPrint("User not logged in");
