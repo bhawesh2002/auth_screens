@@ -18,6 +18,7 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _passController = TextEditingController(text: "");
   final TextEditingController _confirmPassController =
       TextEditingController(text: "");
+  bool signUpTapped = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -155,40 +156,60 @@ class _SignupPageState extends State<SignupPage> {
                       Positioned.fill(
                         top: constraints.maxHeight * 0.6,
                         child: Align(
-                            alignment: Alignment.center,
-                            child: Material(
-                              borderRadius: BorderRadius.circular(
-                                constraints.maxWidth * 0.02,
-                              ),
-                              color: Colors.blue.shade600,
-                              clipBehavior: Clip.antiAlias,
-                              child: InkWell(
-                                splashColor: const Color.fromARGB(31, 0, 0, 0),
-                                highlightColor:
-                                    const Color.fromARGB(31, 0, 0, 0),
-                                onTap: () async {
-                                  await _authStateController
-                                      .signUpWithEmailandPass(
-                                          email: _emailController.text,
-                                          password: _passController.text);
-                                  _emailController.clear();
-                                  _passController.clear();
-                                  _confirmPassController.clear();
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: constraints.maxWidth * 0.12,
-                                      vertical: constraints.maxHeight * 0.03),
-                                  child: const Text(
-                                    "Signup",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                          alignment: Alignment.center,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(
+                              constraints.maxWidth * 0.02,
+                            ),
+                            color: Colors.blue.shade600,
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              splashColor: const Color.fromARGB(31, 0, 0, 0),
+                              highlightColor: const Color.fromARGB(31, 0, 0, 0),
+                              onTap: () async {
+                                setState(() {
+                                  signUpTapped = true;
+                                });
+                                await _authStateController
+                                    .signUpWithEmailandPass(
+                                        email: _emailController.text,
+                                        password: _passController.text);
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  setState(() {
+                                    signUpTapped = false;
+                                  });
+                                });
+
+                                _emailController.clear();
+                                _passController.clear();
+                                _confirmPassController.clear();
+                              },
+                              child: SizedBox(
+                                width: constraints.maxWidth * 0.4,
+                                height: constraints.maxHeight * 0.12,
+                                child: Center(
+                                  child: signUpTapped
+                                      ? SizedBox.square(
+                                          dimension:
+                                              constraints.maxWidth * 0.05,
+                                          child:
+                                              const CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      : const Text(
+                                          "Signup",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                 ),
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   );
