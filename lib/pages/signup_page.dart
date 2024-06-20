@@ -50,6 +50,7 @@ class _SignupPageState extends State<SignupPage> {
                           width: constraints.maxWidth * 0.9,
                           child: TextField(
                             controller: _emailController,
+                            cursorColor: Colors.blue.shade600,
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
                               hintText: "Email",
@@ -85,6 +86,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: TextField(
                             controller: _passController,
                             obscureText: true,
+                            cursorColor: Colors.blue.shade600,
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
                               hintText: "Password",
@@ -164,6 +166,9 @@ class _SignupPageState extends State<SignupPage> {
                                     .signUpWithEmailandPass(
                                         email: _emailController.text,
                                         password: _passController.text);
+                                _emailController.clear();
+                                _passController.clear();
+                                _confirmPassController.clear();
                               },
                               child: Container(
                                 margin: EdgeInsets.symmetric(
