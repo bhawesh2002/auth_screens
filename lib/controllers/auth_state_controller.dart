@@ -61,18 +61,26 @@ class AuthStateController extends GetxController {
   //signOut method to sign out user
   Future<void> signOut() async {
     await deleteAc();
-    debugPrint("Signing Out ${_user.value?.email}");
-    await _authInstance.signOut();
-    _user.value = null;
+    try {
+      debugPrint("Signing Out ${_user.value?.email}");
+      await _authInstance.signOut();
+      _user.value = null;
+    } catch (e) {
+      debugPrint("signOut():$e");
+    }
   }
 
   //deleteAc method to delete user account
   Future<void> deleteAc() async {
-    if (_user.value != null) {
-      debugPrint("Deleting ${_user.value?.email}");
-      await _user.value?.delete();
-    } else {
-      debugPrint("User not logged in");
+    try {
+      if (_user.value != null) {
+        debugPrint("Deleting ${_user.value?.email}");
+        await _user.value?.delete();
+      } else {
+        debugPrint("User not logged in");
+      }
+    } catch (e) {
+      debugPrint("deleteAc():$e");
     }
   }
 }
