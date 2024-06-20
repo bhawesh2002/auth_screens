@@ -46,6 +46,7 @@ class AuthStateController extends GetxController {
   Future<void> loginWithEmailandPass(
       {required String email, required String password}) async {
     try {
+      // ignore: no_leading_underscores_for_local_identifiers
       UserCredential _userCred = await _authInstance.signInWithEmailAndPassword(
           email: email, password: password);
       //update _user with the currently logged in user

@@ -11,7 +11,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // ignore: unused_local_variable
+  // ignore: unused_local_variable, no_leading_underscores_for_local_identifiers
   AuthStateController _authStateController = Get.put(AuthStateController());
   runApp(const MainApp());
 }
