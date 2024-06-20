@@ -20,7 +20,7 @@ class AuthStateController extends GetxController {
 
   //_authState method to check if user is logged in or not
   void _authState() async {
-    _user.value = _authInstance.currentUser;
+    updateUserState();
     if (_user.value == null) {
       debugPrint("User is logged out");
     } else {
@@ -35,6 +35,7 @@ class AuthStateController extends GetxController {
     try {
       await _authInstance.createUserWithEmailAndPassword(
           email: email, password: password);
+      updateUserState();
     } on FirebaseAuthException catch (e) {
       debugPrint("signUpWithEmailandPass(FirebaseAuthException):$e");
     } catch (e) {
@@ -47,10 +48,10 @@ class AuthStateController extends GetxController {
       {required String email, required String password}) async {
     try {
       // ignore: no_leading_underscores_for_local_identifiers
-      UserCredential _userCred = await _authInstance.signInWithEmailAndPassword(
+      await _authInstance.signInWithEmailAndPassword(
           email: email, password: password);
       //update _user with the currently logged in user
-      _user.value = _userCred.user;
+      updateUserState();
     } on FirebaseAuthException catch (e) {
       debugPrint("loginWithEmailandPass(FirebaseAuthException):$e");
     } catch (e) {
@@ -64,7 +65,7 @@ class AuthStateController extends GetxController {
     try {
       debugPrint("Signing Out ${_user.value?.email}");
       await _authInstance.signOut();
-      _user.value = null;
+      updateUserState();
     } catch (e) {
       debugPrint("signOut():$e");
     }
@@ -82,5 +83,10 @@ class AuthStateController extends GetxController {
     } catch (e) {
       debugPrint("deleteAc():$e");
     }
+  }
+
+  // Method to update the user state
+  void updateUserState() {
+    _user.value = _authInstance.currentUser;
   }
 }
