@@ -1,3 +1,4 @@
+import 'package:auth_screens/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:auth_screens/controllers/auth_state_controller.dart';
 import 'package:get/get.dart';
@@ -23,8 +24,9 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Align(
+        resizeToAvoidBottomInset: false,
+        body: Column(children: [
+          Align(
             alignment: Alignment.topCenter,
             child: Container(
               width: Get.width * 0.9,
@@ -217,7 +219,24 @@ class _SignupPageState extends State<SignupPage> {
               ),
             ),
           ),
-        ),
+          SizedBox.square(
+            dimension: Get.width * 0.3,
+          ),
+          GestureDetector(
+            onTap: () {
+              Get.offAll(() => const LoginPage());
+            },
+            child: Text(
+              "Login",
+              style: TextStyle(
+                color: Colors.blue.shade600,
+                fontSize: 20,
+                letterSpacing: 1,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+        ]),
       ),
     );
   }
