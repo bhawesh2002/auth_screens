@@ -16,9 +16,13 @@ class _SignupPageState extends State<SignupPage> {
 
   final TextEditingController _emailController =
       TextEditingController(text: "");
+  final FocusNode _emailFocusNode = FocusNode();
   final TextEditingController _passController = TextEditingController(text: "");
+  final FocusNode _passFocusNode = FocusNode();
   final TextEditingController _confirmPassController =
       TextEditingController(text: "");
+  final FocusNode _confirmPassFocusNode = FocusNode();
+  final _validationKey = GlobalKey<FormState>();
   bool signUpTapped = false;
   bool _passVisible = true;
   bool _conirfPassVisible = true;
@@ -49,207 +53,272 @@ class _SignupPageState extends State<SignupPage> {
               ),
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  return Stack(
-                    children: [
-                      Positioned.fill(
-                        bottom: constraints.maxHeight * 0.6,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                            width: constraints.maxWidth * 0.9,
-                            child: TextField(
-                              controller: _emailController,
-                              cursorColor: Colors.blue.shade600,
-                              decoration: InputDecoration(
-                                border: const OutlineInputBorder(),
-                                hintText: "Email",
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue.shade600,
-                                    width: 2,
+                  return Form(
+                    key: _validationKey,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          bottom: constraints.maxHeight * 0.6,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: constraints.maxWidth * 0.9,
+                              child: TextFormField(
+                                controller: _emailController,
+                                focusNode: _emailFocusNode,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                keyboardType: TextInputType.emailAddress,
+                                onChanged: (value) {},
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Enter Your Email";
+                                  }
+                                  return null;
+                                },
+                                autofocus: false,
+                                cursorColor: Colors.blue.shade600,
+                                decoration: InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  hintText: "Email",
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blue.shade600,
+                                      width: 2,
+                                    ),
                                   ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.black12,
-                                    width: 1,
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.black12,
+                                      width: 1,
+                                    ),
                                   ),
-                                ),
-                                errorBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.redAccent,
-                                    width: 1,
+                                  errorBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.redAccent,
+                                      width: 1,
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned.fill(
-                        bottom: constraints.maxHeight * 0.2,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                            width: constraints.maxWidth * 0.9,
-                            child: TextField(
-                              textAlignVertical: TextAlignVertical.center,
-                              controller: _passController,
-                              obscureText: _passVisible,
-                              cursorColor: Colors.blue.shade600,
-                              decoration: InputDecoration(
-                                border: const OutlineInputBorder(),
-                                hintText: "Password",
-                                suffixIconConstraints: BoxConstraints.tight(
-                                    const Size(56,
-                                        48)), //Calculated Value (DO NOT CHANGE)
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _passVisible = !_passVisible;
-                                    });
-                                  },
-                                  child: Icon(
-                                    _passVisible
-                                        ? Icons.visibility_off
-                                        : Icons.visibility,
-                                    color: Colors.grey.shade600,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue.shade600,
-                                    width: 2,
-                                  ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.black12,
-                                    width: 1,
-                                  ),
-                                ),
-                                errorBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.redAccent,
-                                    width: 1,
+                                  focusedErrorBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.redAccent,
+                                      width: 1,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Positioned.fill(
-                        top: constraints.maxHeight * 0.2,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                            width: constraints.maxWidth * 0.9,
-                            child: TextField(
-                              controller: _confirmPassController,
-                              cursorColor: Colors.blue.shade600,
-                              obscureText: _conirfPassVisible,
-                              decoration: InputDecoration(
-                                border: const OutlineInputBorder(),
-                                hintText: "Confirm Password",
-                                suffixIconConstraints: BoxConstraints.tight(
-                                    const Size(56,
-                                        48)), //Calculated Value (DO NOT CHANGE)
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _conirfPassVisible = !_conirfPassVisible;
-                                    });
-                                  },
-                                  child: Icon(
-                                    _conirfPassVisible
-                                        ? Icons.visibility_off
-                                        : Icons.visibility,
-                                    color: Colors.grey.shade600,
+                        Positioned.fill(
+                          bottom: constraints.maxHeight * 0.2,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: constraints.maxWidth * 0.9,
+                              child: TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                controller: _passController,
+                                focusNode: _passFocusNode,
+                                autofocus: false,
+                                obscureText: _passVisible,
+                                onChanged: (value) {},
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Enter Password";
+                                  }
+                                  return null;
+                                },
+                                cursorColor: Colors.blue.shade600,
+                                decoration: InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  hintText: "Password",
+                                  suffixIconConstraints: BoxConstraints.tight(
+                                      const Size(56,
+                                          48)), //Calculated Value (DO NOT CHANGE)
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _passVisible = !_passVisible;
+                                      });
+                                    },
+                                    child: Icon(
+                                      _passVisible
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: Colors.grey.shade600,
+                                    ),
                                   ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue.shade600,
-                                    width: 2,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blue.shade600,
+                                      width: 2,
+                                    ),
                                   ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.black12,
-                                    width: 1,
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.black12,
+                                      width: 1,
+                                    ),
                                   ),
-                                ),
-                                errorBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.redAccent,
-                                    width: 1,
+                                  errorBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.redAccent,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  focusedErrorBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.redAccent,
+                                      width: 1,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Positioned.fill(
-                        top: constraints.maxHeight * 0.6,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Material(
-                            borderRadius: BorderRadius.circular(
-                              constraints.maxWidth * 0.02,
+                        Positioned.fill(
+                          top: constraints.maxHeight * 0.2,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: constraints.maxWidth * 0.9,
+                              child: TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                controller: _confirmPassController,
+                                focusNode: _confirmPassFocusNode,
+                                cursorColor: Colors.blue.shade600,
+                                obscureText: _conirfPassVisible,
+                                onChanged: (value) {},
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "ConfirmPassEmpty";
+                                  }
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  hintText: "Confirm Password",
+                                  suffixIconConstraints: BoxConstraints.tight(
+                                      const Size(56,
+                                          48)), //Calculated Value (DO NOT CHANGE)
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _conirfPassVisible =
+                                            !_conirfPassVisible;
+                                      });
+                                    },
+                                    child: Icon(
+                                      _conirfPassVisible
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blue.shade600,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.black12,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  errorBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.redAccent,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
-                            color: Colors.blue.shade600,
-                            clipBehavior: Clip.antiAlias,
-                            child: InkWell(
-                              splashColor: const Color.fromARGB(31, 0, 0, 0),
-                              highlightColor: const Color.fromARGB(31, 0, 0, 0),
-                              onTap: () async {
-                                setState(() {
-                                  signUpTapped = true;
-                                });
-                                await _authStateController
-                                    .signUpWithEmailandPass(
-                                        email: _emailController.text,
-                                        password: _passController.text);
-                                Future.delayed(const Duration(seconds: 2), () {
+                          ),
+                        ),
+                        Positioned.fill(
+                          top: constraints.maxHeight * 0.6,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Material(
+                              borderRadius: BorderRadius.circular(
+                                constraints.maxWidth * 0.02,
+                              ),
+                              color: Colors.blue.shade600,
+                              clipBehavior: Clip.antiAlias,
+                              child: InkWell(
+                                splashColor: const Color.fromARGB(31, 0, 0, 0),
+                                highlightColor:
+                                    const Color.fromARGB(31, 0, 0, 0),
+                                onTap: () async {
                                   setState(() {
-                                    signUpTapped = false;
+                                    signUpTapped = true;
                                   });
-                                });
-
-                                _emailController.clear();
-                                _passController.clear();
-                                _confirmPassController.clear();
-                              },
-                              child: SizedBox(
-                                width: constraints.maxWidth * 0.4,
-                                height: constraints.maxHeight * 0.12,
-                                child: Center(
-                                  child: signUpTapped
-                                      ? SizedBox.square(
-                                          dimension:
-                                              constraints.maxWidth * 0.05,
-                                          child:
-                                              const CircularProgressIndicator(
-                                            color: Colors.white,
+                                  _validationKey.currentState?.validate();
+                                  if (_emailController.text.isNotEmpty) {
+                                    if (_passController.text.isNotEmpty) {
+                                      if (_confirmPassController
+                                          .text.isNotEmpty) {
+                                        await _authStateController
+                                            .signUpWithEmailandPass(
+                                                email: _emailController.text,
+                                                password: _passController.text);
+                                      } else {
+                                        _confirmPassFocusNode.requestFocus();
+                                      }
+                                    } else {
+                                      _passFocusNode.requestFocus();
+                                    }
+                                  } else {
+                                    _emailFocusNode.requestFocus();
+                                  }
+                                  Future.delayed(
+                                    const Duration(seconds: 1),
+                                    () {
+                                      setState(() {
+                                        signUpTapped = false;
+                                      });
+                                    },
+                                  );
+                                  if (_authStateController.user != null) {
+                                    _validationKey.currentState!.reset();
+                                  }
+                                },
+                                child: SizedBox(
+                                  width: constraints.maxWidth * 0.4,
+                                  height: constraints.maxHeight * 0.12,
+                                  child: Center(
+                                    child: signUpTapped
+                                        ? SizedBox.square(
+                                            dimension:
+                                                constraints.maxWidth * 0.05,
+                                            child:
+                                                const CircularProgressIndicator(
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        : const Text(
+                                            "Signup",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        )
-                                      : const Text(
-                                          "Signup",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 },
               ),
