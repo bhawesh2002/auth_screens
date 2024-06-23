@@ -22,10 +22,10 @@ class AuthStateController extends GetxController {
   void _authState() async {
     updateUserState();
     if (_user.value == null) {
-      debugPrint("User is logged out");
+      debugPrint("_authState():User is logged out");
     } else {
-      debugPrint("${_user.value?.email} is logged in");
-      await signOut();
+      debugPrint("_authState():${_user.value?.email} is logged in");
+      await _resetApp();
     }
   }
 
@@ -61,9 +61,8 @@ class AuthStateController extends GetxController {
 
   //signOut method to sign out user
   Future<void> signOut() async {
-    await deleteAc();
     try {
-      debugPrint("Signing Out ${_user.value?.email}");
+      debugPrint("signOut():Signing Out ${_user.value?.email}");
       await _authInstance.signOut();
       updateUserState();
     } catch (e) {
@@ -75,13 +74,26 @@ class AuthStateController extends GetxController {
   Future<void> deleteAc() async {
     try {
       if (_user.value != null) {
-        debugPrint("Deleting ${_user.value?.email}");
+        debugPrint("deleteAc(): Deleting ${_user.value?.email}");
         await _user.value?.delete();
       } else {
-        debugPrint("User not logged in");
+        debugPrint("deleteAc(): User not logged in");
       }
     } catch (e) {
       debugPrint("deleteAc():$e");
+    }
+  }
+
+  Future<void> _resetApp() async {
+    try {
+      if (_user.value != null) {
+        debugPrint("resetApp(): Initiating reset");
+        await deleteAc();
+        await signOut();
+        debugPrint("resetApp(): Reset Completed");
+      }
+    } catch (e) {
+      debugPrint("resetApp(): $e");
     }
   }
 
