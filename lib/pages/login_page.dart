@@ -16,7 +16,10 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _emailController =
       TextEditingController(text: "");
+  final FocusNode _emailFocusNode = FocusNode();
   final TextEditingController _passController = TextEditingController(text: "");
+  final FocusNode _passFocusNode = FocusNode();
+  final _validationKey = GlobalKey<FormState>();
   bool logInTapped = false;
   bool _passVisible = true;
   @override
@@ -46,150 +49,197 @@ class _LoginPageState extends State<LoginPage> {
             ),
             child: LayoutBuilder(
               builder: (context, constraints) {
-                return Stack(
-                  children: [
-                    Positioned.fill(
-                      bottom: constraints.maxHeight * 0.6,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: SizedBox(
-                          width: constraints.maxWidth * 0.9,
-                          child: TextField(
-                            controller: _emailController,
-                            cursorColor: Colors.blue.shade600,
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(),
-                              hintText: "Email",
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.blue.shade600,
-                                  width: 2,
+                return Form(
+                  key: _validationKey,
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        bottom: constraints.maxHeight * 0.6,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                            width: constraints.maxWidth * 0.9,
+                            child: TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              controller: _emailController,
+                              focusNode: _emailFocusNode,
+                              onChanged: (value) {},
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Enter Your Email";
+                                }
+                                return null;
+                              },
+                              cursorColor: Colors.blue.shade600,
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                hintText: "Email",
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.blue.shade600,
+                                    width: 2,
+                                  ),
                                 ),
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black12,
-                                  width: 1,
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black12,
+                                    width: 1,
+                                  ),
                                 ),
-                              ),
-                              errorBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.redAccent,
-                                  width: 1,
+                                errorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.redAccent,
+                                    width: 1,
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned.fill(
-                      bottom: constraints.maxHeight * 0.15,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: SizedBox(
-                          width: constraints.maxWidth * 0.9,
-                          child: TextField(
-                            controller: _passController,
-                            obscureText: _passVisible,
-                            cursorColor: Colors.blue.shade600,
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(),
-                              hintText: "Password",
-                              suffixIconConstraints: BoxConstraints.tight(
-                                  const Size(56,
-                                      48)), //Calculated Value (DO NOT CHANGE)
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _passVisible = !_passVisible;
-                                  });
-                                },
-                                child: Icon(
-                                  _passVisible
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: Colors.grey.shade600,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.blue.shade600,
-                                  width: 2,
-                                ),
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black12,
-                                  width: 1,
-                                ),
-                              ),
-                              errorBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.redAccent,
-                                  width: 1,
+                                focusedErrorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.redAccent,
+                                    width: 1,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Positioned.fill(
-                      top: constraints.maxHeight * 0.45,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(
-                            constraints.maxWidth * 0.02,
+                      Positioned.fill(
+                        bottom: constraints.maxHeight * 0.15,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                            width: constraints.maxWidth * 0.9,
+                            child: TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              controller: _passController,
+                              focusNode: _passFocusNode,
+                              onChanged: (value) {},
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Password is Empty";
+                                }
+                                return null;
+                              },
+                              obscureText: _passVisible,
+                              cursorColor: Colors.blue.shade600,
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                hintText: "Password",
+                                suffixIconConstraints: BoxConstraints.tight(
+                                    const Size(56,
+                                        48)), //Calculated Value (DO NOT CHANGE)
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _passVisible = !_passVisible;
+                                    });
+                                  },
+                                  child: Icon(
+                                    _passVisible
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.blue.shade600,
+                                    width: 2,
+                                  ),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black12,
+                                    width: 1,
+                                  ),
+                                ),
+                                errorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.redAccent,
+                                    width: 1,
+                                  ),
+                                ),
+                                focusedErrorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.redAccent,
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                          color: Colors.blue.shade600,
-                          clipBehavior: Clip.antiAlias,
-                          child: InkWell(
-                            splashColor: const Color.fromARGB(31, 0, 0, 0),
-                            highlightColor: const Color.fromARGB(31, 0, 0, 0),
-                            onTap: () async {
-                              setState(() {
-                                logInTapped = true;
-                              });
-                              await _authStateController.loginWithEmailandPass(
-                                  email: _emailController.text,
-                                  password: _passController.text);
-                              Future.delayed(const Duration(seconds: 2), () {
+                        ),
+                      ),
+                      Positioned.fill(
+                        top: constraints.maxHeight * 0.45,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(
+                              constraints.maxWidth * 0.02,
+                            ),
+                            color: Colors.blue.shade600,
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              splashColor: const Color.fromARGB(31, 0, 0, 0),
+                              highlightColor: const Color.fromARGB(31, 0, 0, 0),
+                              onTap: () async {
                                 setState(() {
-                                  logInTapped = false;
+                                  logInTapped = true;
                                 });
-                              });
-
-                              _emailController.clear();
-                              _passController.clear();
-                            },
-                            child: SizedBox(
-                              width: constraints.maxWidth * 0.4,
-                              height: constraints.maxHeight * 0.15,
-                              child: Center(
-                                child: logInTapped
-                                    ? SizedBox.square(
-                                        dimension: constraints.maxWidth * 0.05,
-                                        child: const CircularProgressIndicator(
-                                          color: Colors.white,
+                                _validationKey.currentState?.validate();
+                                if (_emailController.text.isNotEmpty) {
+                                  if (_passController.text.isNotEmpty) {
+                                    await _authStateController
+                                        .loginWithEmailandPass(
+                                            email: _emailController.text,
+                                            password: _passController.text);
+                                  } else {
+                                    _passFocusNode.requestFocus();
+                                  }
+                                } else {
+                                  _emailFocusNode.requestFocus();
+                                }
+                                Future.delayed(const Duration(seconds: 1), () {
+                                  setState(() {
+                                    logInTapped = false;
+                                  });
+                                });
+                                if (_authStateController.user != null) {
+                                  _validationKey.currentState!.reset();
+                                }
+                              },
+                              child: SizedBox(
+                                width: constraints.maxWidth * 0.4,
+                                height: constraints.maxHeight * 0.15,
+                                child: Center(
+                                  child: logInTapped
+                                      ? SizedBox.square(
+                                          dimension:
+                                              constraints.maxWidth * 0.05,
+                                          child:
+                                              const CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      : const Text(
+                                          "Login",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      )
-                                    : const Text(
-                                        "Login",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
             ),
