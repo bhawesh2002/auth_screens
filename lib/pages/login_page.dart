@@ -1,5 +1,6 @@
 import 'package:auth_screens/controllers/auth_state_controller.dart';
 import 'package:auth_screens/pages/signup_page.dart';
+import 'package:auth_screens/utilis/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -60,14 +61,15 @@ class _LoginPageState extends State<LoginPage> {
                           child: SizedBox(
                             width: constraints.maxWidth * 0.9,
                             child: TextFormField(
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode.disabled,
                               controller: _emailController,
                               focusNode: _emailFocusNode,
                               onChanged: (value) {},
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Enter Your Email";
+                                } else if (validateEmail(value) == false) {
+                                  return "Enter valid Email";
                                 }
                                 return null;
                               },

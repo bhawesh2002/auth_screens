@@ -1,4 +1,5 @@
 import 'package:auth_screens/pages/login_page.dart';
+import 'package:auth_screens/utilis/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:auth_screens/controllers/auth_state_controller.dart';
 import 'package:get/get.dart';
@@ -73,6 +74,8 @@ class _SignupPageState extends State<SignupPage> {
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return "Enter Your Email";
+                                  } else if (validateEmail(value) == false) {
+                                    return "Enter valid Email";
                                   }
                                   return null;
                                 },
@@ -126,12 +129,13 @@ class _SignupPageState extends State<SignupPage> {
                                 onChanged: (value) {},
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return "Enter Password";
+                                    return "Enter your password";
                                   }
-                                  return null;
+                                  return validatePassword(value);
                                 },
                                 cursorColor: Colors.blue.shade600,
                                 decoration: InputDecoration(
+                                  errorMaxLines: 8,
                                   border: const OutlineInputBorder(),
                                   hintText: "Password",
                                   suffixIconConstraints: BoxConstraints.tight(
@@ -195,7 +199,9 @@ class _SignupPageState extends State<SignupPage> {
                                 onChanged: (value) {},
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return "ConfirmPassEmpty";
+                                    return "Confirm Password cannot be empty";
+                                  } else if (value != _passController.text) {
+                                    return "Passwords do not match";
                                   }
                                   return null;
                                 },
@@ -264,7 +270,9 @@ class _SignupPageState extends State<SignupPage> {
                                   if (_emailController.text.isNotEmpty) {
                                     if (_passController.text.isNotEmpty) {
                                       if (_confirmPassController
-                                          .text.isNotEmpty) {
+                                              .text.isNotEmpty &&
+                                          _passController.text ==
+                                              _confirmPassController.text) {
                                         await _authStateController
                                             .signUpWithEmailandPass(
                                                 email: _emailController.text,
