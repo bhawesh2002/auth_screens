@@ -6,7 +6,7 @@ bool validateEmail(String email) {
   return emailCheck.hasMatch(email);
 }
 
-String validatePassword(String password) {
+String? validatePassword(String password) {
   // Individual regular expressions for each password requirement
   final RegExp hasUpperCase = RegExp(r'(?=.*[A-Z])');
   final RegExp hasLowerCase = RegExp(r'(?=.*[a-z])');
@@ -33,6 +33,9 @@ String validatePassword(String password) {
   if (!hasMinLength.hasMatch(password)) {
     feedback.add('at least 8 characters long');
   }
-
-  return feedback.join('\n ');
+  if (feedback.isNotEmpty) {
+    return feedback.join('\n ');
+  } else {
+    return null;
+  }
 }
