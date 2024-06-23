@@ -20,6 +20,8 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _confirmPassController =
       TextEditingController(text: "");
   bool signUpTapped = false;
+  bool _passVisible = true;
+  bool _conirfPassVisible = true;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -91,12 +93,29 @@ class _SignupPageState extends State<SignupPage> {
                           child: SizedBox(
                             width: constraints.maxWidth * 0.9,
                             child: TextField(
+                              textAlignVertical: TextAlignVertical.center,
                               controller: _passController,
-                              obscureText: true,
+                              obscureText: _passVisible,
                               cursorColor: Colors.blue.shade600,
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
                                 hintText: "Password",
+                                suffixIconConstraints: BoxConstraints.tight(
+                                    const Size(56,
+                                        48)), //Calculated Value (DO NOT CHANGE)
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _passVisible = !_passVisible;
+                                    });
+                                  },
+                                  child: Icon(
+                                    _passVisible
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.blue.shade600,
@@ -129,9 +148,26 @@ class _SignupPageState extends State<SignupPage> {
                             child: TextField(
                               controller: _confirmPassController,
                               cursorColor: Colors.blue.shade600,
+                              obscureText: _conirfPassVisible,
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
                                 hintText: "Confirm Password",
+                                suffixIconConstraints: BoxConstraints.tight(
+                                    const Size(56,
+                                        48)), //Calculated Value (DO NOT CHANGE)
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _conirfPassVisible = !_conirfPassVisible;
+                                    });
+                                  },
+                                  child: Icon(
+                                    _conirfPassVisible
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.blue.shade600,

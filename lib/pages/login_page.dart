@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
       TextEditingController(text: "");
   final TextEditingController _passController = TextEditingController(text: "");
   bool logInTapped = false;
+  bool _passVisible = true;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -95,6 +96,22 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
                               hintText: "Password",
+                              suffixIconConstraints: BoxConstraints.tight(
+                                  const Size(56,
+                                      48)), //Calculated Value (DO NOT CHANGE)
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _passVisible = !_passVisible;
+                                  });
+                                },
+                                child: Icon(
+                                  _passVisible
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Colors.blue.shade600,
