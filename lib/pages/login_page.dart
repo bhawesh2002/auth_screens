@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: constraints.maxWidth * 0.9,
                           child: TextField(
                             controller: _passController,
-                            obscureText: true,
+                            obscureText: _passVisible,
                             cursorColor: Colors.blue.shade600,
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(),
