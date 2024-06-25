@@ -43,39 +43,39 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Column(children: [
-        Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            width: Get.width * 0.9,
-            height: Get.height * 0.4,
-            margin:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade100,
-              borderRadius: BorderRadius.circular(Get.width * 0.025),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, Get.height * 0.010),
-                  color: Colors.grey.shade300,
-                  blurRadius: 30,
-                  spreadRadius: 10,
-                )
-              ],
-            ),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return Form(
-                  key: _validationKey,
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        bottom: constraints.maxHeight * 0.6,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: SizedBox(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Align(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: Get.width * 0.9,
+                // height: Get.height * 0.4,
+                // margin:
+                // EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
+                padding: EdgeInsets.symmetric(vertical: Get.height * 0.025),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(Get.width * 0.025),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, Get.height * 0.010),
+                      color: Colors.grey.shade300,
+                      blurRadius: 30,
+                      spreadRadius: 10,
+                    )
+                  ],
+                ),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Form(
+                      key: _validationKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
                             width: constraints.maxWidth * 0.9,
                             child: EmailTextField(
                               emailController: _emailController,
@@ -83,26 +83,26 @@ class _LoginPageState extends State<LoginPage> {
                               validator: emailValidator,
                             ),
                           ),
-                        ),
-                      ),
-                      Positioned.fill(
-                        bottom: constraints.maxHeight * 0.15,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                              width: constraints.maxWidth * 0.9,
-                              child: PasswordTextField(
-                                  passController: _passController,
-                                  passFocusNode: _passFocusNode,
-                                  passVisible: _passVisible,
-                                  validator: passwordValidator)),
-                        ),
-                      ),
-                      Positioned.fill(
-                        top: constraints.maxHeight * 0.45,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Material(
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: Get.height * 0.02,
+                            ),
+                          ),
+                          SizedBox(
+                            width: constraints.maxWidth * 0.9,
+                            child: PasswordTextField(
+                              passController: _passController,
+                              passFocusNode: _passFocusNode,
+                              passVisible: _passVisible,
+                              validator: passwordValidator,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              bottom: Get.height * 0.06,
+                            ),
+                          ),
+                          Material(
                             borderRadius: BorderRadius.circular(
                               constraints.maxWidth * 0.02,
                             ),
@@ -138,8 +138,8 @@ class _LoginPageState extends State<LoginPage> {
                                 }
                               },
                               child: SizedBox(
-                                width: constraints.maxWidth * 0.4,
-                                height: constraints.maxHeight * 0.15,
+                                width: Get.width * 0.35,
+                                height: Get.height * 0.065,
                                 child: Center(
                                   child: logInTapped
                                       ? SizedBox.square(
@@ -162,69 +162,66 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-        SizedBox.square(
-          dimension: Get.width * 0.3,
-        ),
-        GestureDetector(
-          onTap: () {
-            Get.offAll(() => const SignupPage());
-          },
-          child: Text(
-            "SignUp",
-            style: TextStyle(
-              color: Colors.blue.shade600,
-              fontSize: 20,
-              letterSpacing: 1,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        SizedBox.square(
-          dimension: Get.width * 0.2,
-        ),
-        Text(
-          _authStateController.user != null
-              ? (_authStateController.user?.email)!
-              : "Not Logged In",
-          style: const TextStyle(
-            fontSize: 16,
-          ),
-        ),
-        SizedBox.square(
-          dimension: Get.width * 0.1,
-        ),
-        Material(
-          borderRadius: BorderRadius.circular(8),
-          clipBehavior: Clip.antiAlias,
-          color: Get.theme.scaffoldBackgroundColor,
-          child: InkWell(
-            onTap: () async {
-              await _authStateController.signOut();
-            },
-            splashColor: Colors.red.shade100,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-              child: Text(
-                _authStateController.user != null ? "Log Out" : "",
-                style: TextStyle(
-                  color: Colors.red.shade500,
-                  fontWeight: FontWeight.bold,
+                    );
+                  },
                 ),
               ),
-            ),
+              SizedBox(
+                height: Get.height * 0.1,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Get.offAll(() => const SignupPage());
+                },
+                child: Text(
+                  "SignUp",
+                  style: TextStyle(
+                    color: Colors.blue.shade600,
+                    fontSize: 20,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: Get.height * 0.1,
+              ),
+              Text(
+                _authStateController.user != null
+                    ? (_authStateController.user?.email)!
+                    : "Not Logged In",
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              Material(
+                borderRadius: BorderRadius.circular(8),
+                clipBehavior: Clip.antiAlias,
+                color: Get.theme.scaffoldBackgroundColor,
+                child: InkWell(
+                  onTap: () async {
+                    await _authStateController.signOut();
+                  },
+                  splashColor: Colors.red.shade100,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8),
+                    child: Text(
+                      _authStateController.user != null ? "Log Out" : "",
+                      style: TextStyle(
+                        color: Colors.red.shade500,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
-        )
-      ]),
-    ));
+        ),
+      ),
+    );
   }
 }
