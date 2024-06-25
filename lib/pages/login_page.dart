@@ -23,12 +23,19 @@ class _LoginPageState extends State<LoginPage> {
   final FocusNode _passFocusNode = FocusNode();
   final _validationKey = GlobalKey<FormState>();
   bool logInTapped = false;
-  bool _passVisible = true;
+  final bool _passVisible = true;
   String? emailValidator(value) {
     if (value!.isEmpty) {
       return "Enter Your Email";
     } else if (validateEmail(value) == false) {
       return "Enter valid Email";
+    }
+    return null;
+  }
+
+  String? passwordValidator(value) {
+    if (value!.isEmpty) {
+      return "Password is Empty";
     }
     return null;
   }
@@ -69,11 +76,13 @@ class _LoginPageState extends State<LoginPage> {
                         child: Align(
                           alignment: Alignment.center,
                           child: SizedBox(
-                              width: constraints.maxWidth * 0.9,
-                              child: EmailTextField(
-                                  emailController: _emailController,
-                                  emailFocusNode: _emailFocusNode,
-                                  validator: emailValidator)),
+                            width: constraints.maxWidth * 0.9,
+                            child: EmailTextField(
+                              emailController: _emailController,
+                              emailFocusNode: _emailFocusNode,
+                              validator: emailValidator,
+                            ),
+                          ),
                         ),
                       ),
                       Positioned.fill(
@@ -81,67 +90,12 @@ class _LoginPageState extends State<LoginPage> {
                         child: Align(
                           alignment: Alignment.center,
                           child: SizedBox(
-                            width: constraints.maxWidth * 0.9,
-                            child: TextFormField(
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              controller: _passController,
-                              focusNode: _passFocusNode,
-                              onChanged: (value) {},
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Password is Empty";
-                                }
-                                return null;
-                              },
-                              obscureText: _passVisible,
-                              cursorColor: Colors.blue.shade600,
-                              decoration: InputDecoration(
-                                border: const OutlineInputBorder(),
-                                hintText: "Password",
-                                suffixIconConstraints: BoxConstraints.tight(
-                                    const Size(56,
-                                        48)), //Calculated Value (DO NOT CHANGE)
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _passVisible = !_passVisible;
-                                    });
-                                  },
-                                  child: Icon(
-                                    _passVisible
-                                        ? Icons.visibility_off
-                                        : Icons.visibility,
-                                    color: Colors.grey.shade600,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue.shade600,
-                                    width: 2,
-                                  ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.black12,
-                                    width: 1,
-                                  ),
-                                ),
-                                errorBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.redAccent,
-                                    width: 1,
-                                  ),
-                                ),
-                                focusedErrorBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.redAccent,
-                                    width: 1,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                              width: constraints.maxWidth * 0.9,
+                              child: PasswordTextField(
+                                  passController: _passController,
+                                  passFocusNode: _passFocusNode,
+                                  passVisible: _passVisible,
+                                  validator: passwordValidator)),
                         ),
                       ),
                       Positioned.fill(

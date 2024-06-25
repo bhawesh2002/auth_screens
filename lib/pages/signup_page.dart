@@ -26,8 +26,8 @@ class _SignupPageState extends State<SignupPage> {
   final FocusNode _confirmPassFocusNode = FocusNode();
   final _validationKey = GlobalKey<FormState>();
   bool signUpTapped = false;
-  bool _passVisible = true;
-  bool _conirfPassVisible = true;
+  final bool _passVisible = true;
+  final bool _conirfPassVisible = true;
   String? emailValidator(value) {
     if (value!.isEmpty) {
       return "Enter Your Email";
@@ -35,6 +35,22 @@ class _SignupPageState extends State<SignupPage> {
       return "Enter valid Email";
     }
     return null;
+  }
+
+  String? confirmPasswordValidator(value) {
+    if (value!.isEmpty) {
+      return "Confirm Password cannot be empty";
+    } else if (value != _passController.text) {
+      return "Passwords do not match";
+    }
+    return null;
+  }
+
+  String? passwordValidator(value) {
+    if (value!.isEmpty) {
+      return "Enter your password";
+    }
+    return validatePassword(value);
   }
 
   @override
@@ -75,9 +91,10 @@ class _SignupPageState extends State<SignupPage> {
                             child: SizedBox(
                               width: constraints.maxWidth * 0.9,
                               child: EmailTextField(
-                                  emailController: _emailController,
-                                  emailFocusNode: _emailFocusNode,
-                                  validator: emailValidator),
+                                emailController: _emailController,
+                                emailFocusNode: _emailFocusNode,
+                                validator: emailValidator,
+                              ),
                             ),
                           ),
                         ),
@@ -87,66 +104,11 @@ class _SignupPageState extends State<SignupPage> {
                             alignment: Alignment.center,
                             child: SizedBox(
                               width: constraints.maxWidth * 0.9,
-                              child: TextFormField(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                controller: _passController,
-                                focusNode: _passFocusNode,
-                                autofocus: false,
-                                obscureText: _passVisible,
-                                onChanged: (value) {},
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Enter your password";
-                                  }
-                                  return validatePassword(value);
-                                },
-                                cursorColor: Colors.blue.shade600,
-                                decoration: InputDecoration(
-                                  errorMaxLines: 8,
-                                  border: const OutlineInputBorder(),
-                                  hintText: "Password",
-                                  suffixIconConstraints: BoxConstraints.tight(
-                                      const Size(56,
-                                          48)), //Calculated Value (DO NOT CHANGE)
-                                  suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _passVisible = !_passVisible;
-                                      });
-                                    },
-                                    child: Icon(
-                                      _passVisible
-                                          ? Icons.visibility_off
-                                          : Icons.visibility,
-                                      color: Colors.grey.shade600,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.blue.shade600,
-                                      width: 2,
-                                    ),
-                                  ),
-                                  enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.black12,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  errorBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  focusedErrorBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent,
-                                      width: 1,
-                                    ),
-                                  ),
-                                ),
+                              child: PasswordTextField(
+                                passController: _passController,
+                                passFocusNode: _passFocusNode,
+                                passVisible: _passVisible,
+                                validator: passwordValidator,
                               ),
                             ),
                           ),
@@ -157,61 +119,12 @@ class _SignupPageState extends State<SignupPage> {
                             alignment: Alignment.center,
                             child: SizedBox(
                               width: constraints.maxWidth * 0.9,
-                              child: TextFormField(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                controller: _confirmPassController,
-                                focusNode: _confirmPassFocusNode,
-                                cursorColor: Colors.blue.shade600,
-                                obscureText: _conirfPassVisible,
-                                onChanged: (value) {},
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Confirm Password cannot be empty";
-                                  } else if (value != _passController.text) {
-                                    return "Passwords do not match";
-                                  }
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                  border: const OutlineInputBorder(),
-                                  hintText: "Confirm Password",
-                                  suffixIconConstraints: BoxConstraints.tight(
-                                      const Size(56,
-                                          48)), //Calculated Value (DO NOT CHANGE)
-                                  suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _conirfPassVisible =
-                                            !_conirfPassVisible;
-                                      });
-                                    },
-                                    child: Icon(
-                                      _conirfPassVisible
-                                          ? Icons.visibility_off
-                                          : Icons.visibility,
-                                      color: Colors.grey.shade600,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.blue.shade600,
-                                      width: 2,
-                                    ),
-                                  ),
-                                  enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.black12,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  errorBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent,
-                                      width: 1,
-                                    ),
-                                  ),
-                                ),
+                              child: PasswordTextField(
+                                passController: _confirmPassController,
+                                passFocusNode: _confirmPassFocusNode,
+                                passVisible: _conirfPassVisible,
+                                hintText: "Confirm Password",
+                                validator: confirmPasswordValidator,
                               ),
                             ),
                           ),
