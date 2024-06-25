@@ -1,5 +1,6 @@
 import 'package:auth_screens/pages/login_page.dart';
 import 'package:auth_screens/utilis/validation.dart';
+import 'package:auth_screens/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:auth_screens/controllers/auth_state_controller.dart';
 import 'package:get/get.dart';
@@ -27,6 +28,15 @@ class _SignupPageState extends State<SignupPage> {
   bool signUpTapped = false;
   bool _passVisible = true;
   bool _conirfPassVisible = true;
+  String? emailValidator(value) {
+    if (value!.isEmpty) {
+      return "Enter Your Email";
+    } else if (validateEmail(value) == false) {
+      return "Enter valid Email";
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -64,52 +74,10 @@ class _SignupPageState extends State<SignupPage> {
                             alignment: Alignment.center,
                             child: SizedBox(
                               width: constraints.maxWidth * 0.9,
-                              child: TextFormField(
-                                controller: _emailController,
-                                focusNode: _emailFocusNode,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                keyboardType: TextInputType.emailAddress,
-                                onChanged: (value) {},
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Enter Your Email";
-                                  } else if (validateEmail(value) == false) {
-                                    return "Enter valid Email";
-                                  }
-                                  return null;
-                                },
-                                autofocus: false,
-                                cursorColor: Colors.blue.shade600,
-                                decoration: InputDecoration(
-                                  border: const OutlineInputBorder(),
-                                  hintText: "Email",
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.blue.shade600,
-                                      width: 2,
-                                    ),
-                                  ),
-                                  enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.black12,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  errorBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  focusedErrorBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent,
-                                      width: 1,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              child: EmailTextField(
+                                  emailController: _emailController,
+                                  emailFocusNode: _emailFocusNode,
+                                  validator: emailValidator),
                             ),
                           ),
                         ),
