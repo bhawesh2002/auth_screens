@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                                         "Password reset email sent successfully");
                                   } else {
                                     Get.snackbar("Email is Empty",
-                                        "Enter email to reset your password");
+                                        "Enter valid email to reset your password");
                                   }
                                 },
                                 child: Text(
@@ -273,91 +273,105 @@ class _LoginPageState extends State<LoginPage> {
                             ],
                           ),
                         ),
-                        Column(
-                          children: [
-                            Text(
-                              _authStateController.user != null
-                                  ? (_authStateController.user?.email)!
-                                  : "Not Logged In",
-                              style: const TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Material(
-                                  borderRadius: BorderRadius.circular(8),
-                                  clipBehavior: Clip.antiAlias,
-                                  color: Get.theme.scaffoldBackgroundColor,
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await _authStateController.signOut();
-                                    },
-                                    splashColor: Colors.red.shade100,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16.0, vertical: 8),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            _authStateController.user != null
-                                                ? "Log Out"
-                                                : "",
-                                            style: TextStyle(
-                                              color: Colors.red.shade500,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
+                        Obx(
+                          () => _authStateController.user != null
+                              ? Column(
+                                  children: [
+                                    Text(
+                                      (_authStateController.user?.email)!,
+                                      style: const TextStyle(
+                                        fontSize: 16,
                                       ),
                                     ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: constraints.maxWidth * 0.02,
-                                  ),
-                                ),
-                                Material(
-                                  borderRadius: BorderRadius.circular(8),
-                                  clipBehavior: Clip.antiAlias,
-                                  color: Get.theme.scaffoldBackgroundColor,
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await _authStateController.deleteAc();
-                                    },
-                                    splashColor: Colors.red.shade100,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16.0, vertical: 8),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            _authStateController.user != null
-                                                ? "Delete Account"
-                                                : "",
-                                            style: TextStyle(
-                                              color: Colors.red.shade500,
-                                              fontWeight: FontWeight.bold,
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          clipBehavior: Clip.antiAlias,
+                                          color:
+                                              Get.theme.scaffoldBackgroundColor,
+                                          child: InkWell(
+                                            onTap: () async {
+                                              await _authStateController
+                                                  .signOut();
+                                            },
+                                            splashColor: Colors.red.shade100,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16.0,
+                                                      vertical: 8),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "Log Out",
+                                                    style: TextStyle(
+                                                      color:
+                                                          Colors.red.shade500,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                                constraints.maxWidth * 0.02,
+                                          ),
+                                        ),
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          clipBehavior: Clip.antiAlias,
+                                          color:
+                                              Get.theme.scaffoldBackgroundColor,
+                                          child: InkWell(
+                                            onTap: () async {
+                                              await _authStateController
+                                                  .deleteAc();
+                                            },
+                                            splashColor: Colors.red.shade100,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16.0,
+                                                      vertical: 8),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "Delete Account",
+                                                    style: TextStyle(
+                                                      color:
+                                                          Colors.red.shade500,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                )
+                              : const SizedBox(),
+                        )
                       ],
                     );
                   },
