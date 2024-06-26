@@ -34,7 +34,7 @@ String? validatePassword(String password) {
     feedback.add('at least 8 characters long');
   }
   if (feedback.isNotEmpty) {
-    return feedback.join('\n ');
+    return feedback.join('\n');
   } else {
     return null;
   }
