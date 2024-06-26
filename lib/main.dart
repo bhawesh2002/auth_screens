@@ -1,5 +1,5 @@
 import 'package:auth_screens/controllers/auth_state_controller.dart';
-import 'package:auth_screens/pages/signup_page.dart';
+import 'package:auth_screens/pages/auth_option_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,7 +26,7 @@ class MainApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey.shade100,
         fontFamily: GoogleFonts.lato().fontFamily,
       ),
-      home: const SignupPage(),
+      home: const AuthOptionsPage(),
     );
   }
 }
