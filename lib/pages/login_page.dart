@@ -242,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // Padding(
                         //     padding: EdgeInsets.only(
@@ -273,6 +273,8 @@ class _LoginPageState extends State<LoginPage> {
                             ],
                           ),
                         ),
+                        const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8)),
                         Obx(
                           () => _authStateController.user != null
                               ? Column(
