@@ -1,3 +1,4 @@
+import 'package:auth_screens/pages/auth_option_grid.dart';
 import 'package:auth_screens/pages/login_page.dart';
 import 'package:auth_screens/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
@@ -27,65 +28,111 @@ class _SignupPageState extends State<SignupPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Align(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: Get.width * 0.9,
-                // height: Get.height * 0.6,
-                //margin: EdgeInsets.only(
-                //    top: MediaQuery.of(context).size.height * 0.1),
-                padding: EdgeInsets.symmetric(vertical: Get.height * 0.025),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(Get.width * 0.025),
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(0, Get.height * 0.010),
-                      color: Colors.grey.shade300,
-                      blurRadius: 30,
-                      spreadRadius: 10,
-                    )
-                  ],
+        body: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const Padding(padding: EdgeInsets.symmetric(vertical: 16)),
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: PopupMenuButton(
+                  iconSize: 24,
+                  padding: const EdgeInsets.all(16),
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem(
+                        onTap: () {
+                          Get.offAll(() => const AuthOptionsPage());
+                        },
+                        child: const Text("Go Home"),
+                      ),
+                    ];
+                  },
                 ),
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return Form(
-                      key: _validationKey,
+              ),
+            ),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 8)),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                ),
+                child: Text(
+                  "Get Started",
+                  style: TextStyle(
+                    color: Colors.blue.shade600,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28,
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                ),
+                child: Text(
+                  "Signup with vanilla auth screens",
+                  style: TextStyle(
+                    color: Colors.grey.shade800,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 24,
+              ),
+            ),
+            Container(
+              width: Get.width * 0.9,
+              padding: EdgeInsets.symmetric(vertical: Get.height * 0.025),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(Get.width * 0.025),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(Get.height * 0.005, Get.height * 0.010),
+                    color: const Color.fromARGB(255, 201, 233, 255),
+                    blurRadius: 35,
+                  ),
+                ],
+              ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return Form(
+                    key: _validationKey,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: constraints.maxWidth * 0.05),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width: constraints.maxWidth * 0.9,
-                            child: EmailTextField(
-                              emailController: _emailController,
-                            ),
+                          EmailTextField(
+                            emailController: _emailController,
                           ),
                           Padding(
                             padding: EdgeInsets.only(
                               top: Get.height * 0.02,
                             ),
                           ),
-                          SizedBox(
-                            width: constraints.maxWidth * 0.9,
-                            child: PasswordTextField(
-                              passController: _passController,
-                            ),
+                          PasswordTextField(
+                            passController: _passController,
                           ),
                           Padding(
                             padding: EdgeInsets.only(
                               top: Get.height * 0.02,
                             ),
                           ),
-                          SizedBox(
-                            width: constraints.maxWidth * 0.9,
-                            child: PasswordTextField(
-                              passController: _confirmPassController,
-                              hintText: "Confirm Password",
-                              confirmationController: _passController,
-                            ),
+                          PasswordTextField(
+                            passController: _confirmPassController,
+                            hintText: "Confirm Password",
+                            confirmationController: _passController,
                           ),
                           Padding(
                             padding: EdgeInsets.only(
@@ -148,29 +195,43 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         ],
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-              SizedBox(
-                height: Get.height * 0.1,
-              ),
-              GestureDetector(
+            ),
+            // SizedBox(
+            //   height: Get.height * 0.1,
+            // ),
+            Expanded(
+              child: GestureDetector(
                 onTap: () {
                   Get.offAll(() => const LoginPage());
                 },
-                child: Text(
-                  "Login",
-                  style: TextStyle(
-                    color: Colors.blue.shade600,
-                    fontSize: 20,
-                    letterSpacing: 1,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account?",
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      "Login",
+                      style: TextStyle(
+                        color: Colors.blue.shade600,
+                        fontSize: 18,
+                        letterSpacing: 1,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );
