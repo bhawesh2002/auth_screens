@@ -18,12 +18,9 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _emailController =
       TextEditingController(text: "");
-  final FocusNode _emailFocusNode = FocusNode();
   final TextEditingController _passController = TextEditingController(text: "");
-  final FocusNode _passFocusNode = FocusNode();
   final _validationKey = GlobalKey<FormState>();
   bool logInTapped = false;
-  final bool _passVisible = true;
   String? emailValidator(value) {
     if (value!.isEmpty) {
       return "Enter Your Email";
@@ -79,8 +76,6 @@ class _LoginPageState extends State<LoginPage> {
                             width: constraints.maxWidth * 0.9,
                             child: EmailTextField(
                               emailController: _emailController,
-                              emailFocusNode: _emailFocusNode,
-                              validator: emailValidator,
                             ),
                           ),
                           Padding(
@@ -92,9 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                             width: constraints.maxWidth * 0.9,
                             child: PasswordTextField(
                               passController: _passController,
-                              passFocusNode: _passFocusNode,
-                              passVisible: _passVisible,
-                              validator: passwordValidator,
+                              forLogin: true,
                             ),
                           ),
                           Padding(
@@ -115,18 +108,12 @@ class _LoginPageState extends State<LoginPage> {
                                 setState(() {
                                   logInTapped = true;
                                 });
-                                _validationKey.currentState?.validate();
-                                if (_emailController.text.isNotEmpty) {
-                                  if (_passController.text.isNotEmpty) {
-                                    await _authStateController
-                                        .loginWithEmailandPass(
-                                            email: _emailController.text,
-                                            password: _passController.text);
-                                  } else {
-                                    _passFocusNode.requestFocus();
-                                  }
-                                } else {
-                                  _emailFocusNode.requestFocus();
+
+                                if (_validationKey.currentState!.validate()) {
+                                  await _authStateController
+                                      .loginWithEmailandPass(
+                                          email: _emailController.text,
+                                          password: _passController.text);
                                 }
                                 Future.delayed(const Duration(seconds: 1), () {
                                   setState(() {

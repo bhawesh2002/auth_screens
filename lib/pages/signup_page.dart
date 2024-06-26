@@ -1,5 +1,4 @@
 import 'package:auth_screens/pages/login_page.dart';
-import 'package:auth_screens/utilis/validation.dart';
 import 'package:auth_screens/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:auth_screens/controllers/auth_state_controller.dart';
@@ -18,41 +17,11 @@ class _SignupPageState extends State<SignupPage> {
 
   final TextEditingController _emailController =
       TextEditingController(text: "");
-  final FocusNode _emailFocusNode = FocusNode();
   final TextEditingController _passController = TextEditingController(text: "");
-  final FocusNode _passFocusNode = FocusNode();
   final TextEditingController _confirmPassController =
       TextEditingController(text: "");
-  final FocusNode _confirmPassFocusNode = FocusNode();
   final _validationKey = GlobalKey<FormState>();
   bool signUpTapped = false;
-  final bool _passVisible = true;
-  final bool _conirfPassVisible = true;
-  String? emailValidator(value) {
-    if (value!.isEmpty) {
-      return "Enter Your Email";
-    } else if (validateEmail(value) == false) {
-      return "Enter valid Email";
-    }
-    return null;
-  }
-
-  String? confirmPasswordValidator(value) {
-    if (value!.isEmpty) {
-      return "Confirm Password cannot be empty";
-    } else if (value != _passController.text) {
-      return "Passwords do not match";
-    }
-    return null;
-  }
-
-  String? passwordValidator(value) {
-    if (value!.isEmpty) {
-      return "Enter your password";
-    }
-    return validatePassword(value);
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -92,8 +61,6 @@ class _SignupPageState extends State<SignupPage> {
                             width: constraints.maxWidth * 0.9,
                             child: EmailTextField(
                               emailController: _emailController,
-                              emailFocusNode: _emailFocusNode,
-                              validator: emailValidator,
                             ),
                           ),
                           Padding(
@@ -105,9 +72,6 @@ class _SignupPageState extends State<SignupPage> {
                             width: constraints.maxWidth * 0.9,
                             child: PasswordTextField(
                               passController: _passController,
-                              passFocusNode: _passFocusNode,
-                              passVisible: _passVisible,
-                              validator: passwordValidator,
                             ),
                           ),
                           Padding(
@@ -119,10 +83,8 @@ class _SignupPageState extends State<SignupPage> {
                             width: constraints.maxWidth * 0.9,
                             child: PasswordTextField(
                               passController: _confirmPassController,
-                              passFocusNode: _confirmPassFocusNode,
-                              passVisible: _conirfPassVisible,
                               hintText: "Confirm Password",
-                              validator: confirmPasswordValidator,
+                              confirmationController: _passController,
                             ),
                           ),
                           Padding(
@@ -143,37 +105,21 @@ class _SignupPageState extends State<SignupPage> {
                                 setState(() {
                                   signUpTapped = true;
                                 });
-                                _validationKey.currentState?.validate();
-                                if (_emailController.text.isNotEmpty) {
-                                  if (_passController.text.isNotEmpty) {
-                                    if (_confirmPassController
-                                            .text.isNotEmpty &&
-                                        _passController.text ==
-                                            _confirmPassController.text) {
-                                      await _authStateController
-                                          .signUpWithEmailandPass(
-                                              email: _emailController.text,
-                                              password: _passController.text);
-                                    } else {
-                                      _confirmPassFocusNode.requestFocus();
-                                    }
-                                  } else {
-                                    _passFocusNode.requestFocus();
-                                  }
-                                } else {
-                                  _emailFocusNode.requestFocus();
+                                if (_validationKey.currentState!.validate()) {
+                                  await _authStateController
+                                      .signUpWithEmailandPass(
+                                          email: _emailController.text,
+                                          password: _passController.text);
                                 }
                                 Future.delayed(
                                   const Duration(seconds: 1),
                                   () {
                                     setState(() {
                                       signUpTapped = false;
+                                      _authStateController.updateUserState();
                                     });
                                   },
                                 );
-                                if (_authStateController.user != null) {
-                                  _validationKey.currentState!.reset();
-                                }
                               },
                               child: SizedBox(
                                 width: Get.width * 0.35,
