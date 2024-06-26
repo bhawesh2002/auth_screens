@@ -72,6 +72,17 @@ class AuthStateController extends GetxController {
     }
   }
 
+  Future<void> sendPassResetEmail({required String email}) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      debugPrint('sendPassResetEmail(): Password Reset Email Sent');
+    } on FirebaseAuthException catch (e) {
+      debugPrint("sendPassResetEmail(FirebaseAuthException):$e");
+    } catch (e) {
+      debugPrint("sendPassResetEmail():$e");
+    }
+  }
+
   //deleteAc method to delete user account
   Future<void> deleteAc() async {
     try {
