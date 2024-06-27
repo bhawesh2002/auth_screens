@@ -29,9 +29,9 @@ class _SignupPageState extends State<SignupPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Padding(padding: EdgeInsets.symmetric(vertical: 16)),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 4)),
             Align(
               alignment: Alignment.topRight,
               child: Padding(
