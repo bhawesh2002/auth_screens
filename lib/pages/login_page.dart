@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () {
                           Get.offAll(() => const AuthOptionsPage());
                         },
-                        child: const Text("Go Home"),
+                        child: const Text("Collections"),
                       ),
                     ];
                   },
