@@ -245,10 +245,6 @@ class _LoginPageState extends State<LoginPage> {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Padding(
-                        //     padding: EdgeInsets.only(
-                        //   bottom: constraints.maxHeight * 0.3,
-                        // )),
                         GestureDetector(
                           onTap: () {
                             Get.offAll(() => const SignupPage());
